@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import UserModal from "../components/RemoveUserModal";
 // import UserModal from "../components/RemoveUserModal";
 export default function UsersPage() {
-  const { users } = useContext(UserContext)
+  const { users, removeUser } = useContext(UserContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -57,6 +57,7 @@ export default function UsersPage() {
           open={isModalOpen}
           user={selectedUser}
           onClose={() => setIsModalOpen(false)}
+          onConfirm={removeUser}
         />
       )}
     </div>

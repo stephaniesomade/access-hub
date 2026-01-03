@@ -1,41 +1,71 @@
-// create new component 
-// should not call remove User directly
-// only handles password input/confirm or cancel actions 
-// props: isOpen, onConfirm, onCancel, userName
-// should not own the logic but just report event upwards
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 }
-export default function UserModal({ user, open, onClose }) {
+export default function UserModal({ user, open, onClose, onConfirm }) {
+  const [passwordInput, setPasswordInput] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleConfirm = () => {
+    const adminPassword = "admin123" // replace with secure logic later
+
+    if (passwordInput === adminPassword) {
+      onConfirm(user.id);
+      setPasswordInput('');
+      setErrorMessage('');
+      onClose();
+    } else {
+      setErrorMessage("This password is incorrect.")
+    }
+  }
+
+  const handleCancel = () => {
+    setPasswordInput('');
+    setErrorMessage('');
+    onClose();
+  }
+
+  if (!user) return null;
+
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleCancel}
       aria-labelledby="user-modal"
       aria-describedby="user-removal-modal"
     >
-
       <Box sx={style}>
-        <Typography id="remove-user-modal" variant="h6" component="h2">
-          Are you sure you wish to remove {user.name} permanently?
-        </Typography>
-        <Typography id="remove-user-description" sx={{ mt: 2 }}>
-          {/* <div>
-        {user ? `Remove ${user.name}?` : 'No user selected'}
-      </div> */}
-        </Typography>
+        <h2>Remove {user.name}?</h2>
+        <TextField
+          type="password"
+          label="Admin Password"
+          value={passwordInput}
+          onChange={(e) => setPasswordInput(e.target.value)}
+          autoFocus />
+
+        {errorMessage && <span style={{ color: 'red' }}>{errorMessage}</span>}
+
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          <Button variant="contained" color="error" onClick={handleConfirm}>
+            Confirm
+          </Button>
+          <Button variant="outlined" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </Box>
       </Box>
     </Modal>
   )
