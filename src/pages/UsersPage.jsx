@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import Table from '@mui/material/Table';
@@ -7,9 +8,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import UserModal from "../components/RemoveUserModal";
 export default function UsersPage() {
   const { users, removeUser } = useContext(UserContext)
-  // addUser} = useContext(UserContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   return (
     <div>
@@ -39,12 +42,21 @@ export default function UsersPage() {
                 </TableCell>
                 <TableCell scope="row">{user.role}</TableCell>
                 <TableCell scope="row">{user.active === true ? 'Yes' : 'No'}</TableCell>
-                {user.role !== "admin" ? <TableCell><button onClick={() => removeUser(user.id)}>Remove User</button></TableCell> : <TableCell> <h5> Cannot remove user</h5></TableCell>}
+                {user.role !== "admin" ? <TableCell><button onClick={() => { setIsModalOpen(true); setSelectedUser(user) }}>Remove User</button></TableCell> : <TableCell> <h5> Cannot remove user</h5></TableCell>}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {isModalOpen && (
+        <UserModal
+          open={isModalOpen}
+          user={selectedUser}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={removeUser}
+        />
+      )}
     </div>
   );
 };
