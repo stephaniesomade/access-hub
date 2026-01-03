@@ -9,13 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import UserModal from "../components/RemoveUserModal";
-// import UserModal from "../components/RemoveUserModal";
 export default function UsersPage() {
   const { users, removeUser } = useContext(UserContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-
-  // removeUser, addUser = useContext(UserContext);
 
   return (
     <div>
