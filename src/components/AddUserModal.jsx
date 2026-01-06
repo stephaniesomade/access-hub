@@ -18,7 +18,7 @@ const style = {
 
 export default function AddUserModal({ open, onClose, onConfirm }) {
   const [userName, setUserName] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('viewer');
   const [active, setActive] = useState(true);
   const handleCancel = () => {
     onClose();
@@ -26,6 +26,7 @@ export default function AddUserModal({ open, onClose, onConfirm }) {
 
   const handleConfirm = () => {
     onConfirm(userName, role, active)
+    onClose()
   }
 
   return (
@@ -41,19 +42,25 @@ export default function AddUserModal({ open, onClose, onConfirm }) {
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           autoFocus />
+        <br></br>
+
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}>
-          <option value="admin">admin</option>
           <option value="viewer">viewer</option>
-          <option value="support">support</option>
           <option value="editor">editor</option>
+          <option value="support">support</option>
+          <option value="admin">admin</option>
         </select>
         <br></br>
         <br></br>
         <Button variant="contained" color="success" onClick={handleConfirm}>
           Confirm
         </Button>
+        <Button variant="outlined" onClick={handleCancel}>
+            Cancel
+          </Button>
+
       </Box>
 
     </Modal>
