@@ -15,7 +15,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 }
-export default function UserModal({ user, open, onClose, onConfirm }) {
+export default function RemoveUserModal({ user, open, onClose, onConfirm }) {
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 

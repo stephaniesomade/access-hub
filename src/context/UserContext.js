@@ -1,23 +1,23 @@
 import { createContext, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-
+import { generateId } from "../utils/generateId";
 export const UserContext = createContext();
 
 const initialUsers = [
-  { id: 1, name: "Alice", role: "admin", active: true },
-  { id: 2, name: "Bob", role: "viewer", active: true },
-  { id: 3, name: "Trina", role: "admin", active: true },
-  { id: 4, name: "Sam", role: "viewer", active: false },
-  { id: 5, name: "Billy", role: "editor", active: false },
-  { id: 6, name: "Robert", role: "support", active: true },
-  { id: 7, name: "Samantha", role: "viewer", active: false },
+  { id: 'd18eec', name: "Alice", role: "admin", active: true },
+  { id: '4973gH', name: "Bob", role: "viewer", active: true },
+  { id: '9PdJK2', name: "Trina", role: "admin", active: true },
+  { id: 'G9pOs6', name: "Sam", role: "support", active: false },
+  { id: 'MKS0op', name: "Billy", role: "editor", active: false },
+  { id: 'lapd45', name: "Robert", role: "support", active: true },
+  { id: 'PAl4G9', name: "Samantha", role: "viewer", active: false },
 ]
+
 export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState(initialUsers);
 
-  const addUser = (name, role, active) => { 
+  const addUser = (name, role, active) => {
     const newUser = {
-      id: uuidv4(),
+      id: generateId(),
       name,
       role,
       active
@@ -25,12 +25,12 @@ export const UserProvider = ({ children }) => {
     setUsers(prev => [...prev, newUser])
   }
 
-  const removeUser = (id) => { 
+  const removeUser = (id) => {
     setUsers(prev => prev.filter(user => user.id !== id));
   }
 
   return (
-    <UserContext.Provider value={{ users, setUsers, addUser, removeUser}}>
+    <UserContext.Provider value={{ users, setUsers, addUser, removeUser }}>
       {children}
     </UserContext.Provider>
   );
