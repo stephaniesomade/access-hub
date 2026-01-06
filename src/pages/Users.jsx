@@ -13,7 +13,7 @@ import AddUserModal from "../components/AddUserModal";
 import { filterUsers } from "../utils/filterUsers";
 import { Button } from "@mui/material";
 export default function UsersPage() {
-  const { users, removeUser, addUser } = useContext(UserContext);
+  const { users, removeUser, addUser, toggleActive } = useContext(UserContext);
 
   const [isRemoveUserModalOpen, setRemoveUserModalOpen] = useState(false);
   const [isAddUserModalOpen, setAddUserModalOpen] = useState(false);
@@ -48,6 +48,7 @@ export default function UsersPage() {
               <TableCell scope="col">Role</TableCell>
               <TableCell scope="col">Active</TableCell>
               <TableCell scope="col">Remove User?</TableCell>
+              <TableCell scope="col">Deactivate User?</TableCell>
             </TableRow>
           </TableHead>
 
@@ -71,6 +72,19 @@ export default function UsersPage() {
                 ) : (
                   <TableCell><span>Cannot remove user</span></TableCell>
                 )}
+                
+                <TableCell>
+                {user.role !== 'admin' ? (
+                  <Button
+                    variant="contained"
+                    color={ user.active ? "warning" : "success"}
+                    onClick={() => toggleActive(user.id)}>
+                   {user.active? "Deactive User" : "Actuvate User"}
+                  </Button>
+                ) : ( 
+                  "Cannot change admin status"
+                )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
