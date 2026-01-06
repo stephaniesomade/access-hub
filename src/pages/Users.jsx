@@ -40,7 +40,8 @@ export default function UsersPage() {
       </select>
 
       <TableContainer component={Paper}>
-        <Table aria-label="user table">
+        <Table aria-label="user management table">
+          <caption>List of users, roles, active status and actions</caption>
           <TableHead>
             <TableRow>
               <TableCell scope="col" onClick={() => { setSortField('id'); setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); }}>ID</TableCell>
@@ -55,35 +56,37 @@ export default function UsersPage() {
           <TableBody>
             {displayedUsers.map(user => (
               <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell>{user.active ? 'Yes' : 'No'}</TableCell>
+                <TableCell scope="row">{user.id}</TableCell>
+                <TableCell scope="row">{user.name}</TableCell>
+                <TableCell scope="row">{user.role}</TableCell>
+                <TableCell scope="row">{user.active ? 'Yes' : 'No'}</TableCell>
                 {user.role !== "admin" ? (
-                  <TableCell>
+                  <TableCell scope="row">
                     <Button
                       variant="contained"
                       color="error"
+                      aria-label="Open Remove user modal"
                       onClick={() => { setRemoveUserModalOpen(true); setSelectedUser(user); }}
                     >
                       Remove User
                     </Button>
                   </TableCell>
                 ) : (
-                  <TableCell><span>Cannot remove user</span></TableCell>
+                  <TableCell scope="row"><span>Cannot remove user</span></TableCell>
                 )}
-                
-                <TableCell>
-                {user.role !== 'admin' ? (
-                  <Button
-                    variant="contained"
-                    color={ user.active ? "warning" : "success"}
-                    onClick={() => toggleActive(user.id)}>
-                   {user.active? "Deactivate User" : "Reactivate User"}
-                  </Button>
-                ) : ( 
-                  "Cannot change admin status"
-                )}
+
+                <TableCell scope="row">
+                  {user.role !== 'admin' ? (
+                    <Button
+                      variant="contained"
+                      color={user.active ? "warning" : "success"}
+                      aria-label={`Toggle user activity for ${user.name}`}
+                      onClick={() => toggleActive(user.id)}>
+                      {user.active ? "Deactivate User" : "Reactivate User"}
+                    </Button>
+                  ) : (
+                    "Cannot change admin status"
+                  )}
                 </TableCell>
               </TableRow>
             ))}
