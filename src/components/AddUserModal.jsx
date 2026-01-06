@@ -60,9 +60,7 @@ export default function AddUserModal({ open, onClose, onConfirm }) {
         <Button variant="outlined" onClick={handleCancel}>
             Cancel
           </Button>
-
       </Box>
-
     </Modal>
   )
 }
