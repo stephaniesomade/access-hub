@@ -79,7 +79,7 @@ export default function UsersPage() {
                     variant="contained"
                     color={ user.active ? "warning" : "success"}
                     onClick={() => toggleActive(user.id)}>
-                   {user.active? "Deactive User" : "Actuvate User"}
+                   {user.active? "Deactivate User" : "Reactivate User"}
                   </Button>
                 ) : ( 
                   "Cannot change admin status"
@@ -91,7 +91,7 @@ export default function UsersPage() {
         </Table>
       </TableContainer>
 
-      <Button color="success" onClick={() => { setAddUserModalOpen(true) }}>Add User</Button>
+      <Button color="success" onClick={() => { setAddUserModalOpen(true) }}>Click to Add New User</Button>
 
       {/* Modals */}
       {isAddUserModalOpen && (
