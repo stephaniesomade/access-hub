@@ -16,37 +16,42 @@ const style = {
   p: 4,
 }
 
-export default function AddUserModal({ open, onClose, onConfirm}) {
+export default function AddUserModal({ open, onClose, onConfirm }) {
   const [userName, setUserName] = useState('');
+  const [role, setRole] = useState('');
+  const [active, setActive] = useState(true);
   const handleCancel = () => {
     onClose();
   }
 
-  const handleConfirm = () => { 
-    onConfirm(userName, "viewer", true)
+  const handleConfirm = () => {
+    onConfirm(userName, role, active)
   }
 
   return (
     <Modal
-    open={open}
-    onClose={handleCancel}
-    // onConfirm = 
+      open={open}
+      onClose={handleCancel}
     >
       <Box sx={style}>
         <h2>Add new user</h2>
         <TextField
-        type="user name"
-        label=" User's name"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        autoFocus />
-        {/* <TextField
-        type="surname"
-        label=" User"
-        value={setInput}
-        onChange={(e) => setInput(e.target.value)}
-        autoFocus /> */}
-        <Button onClick={handleConfirm}>
+          type="user name"
+          label=" User's name"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          autoFocus />
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}>
+          <option value="admin">admin</option>
+          <option value="viewer">viewer</option>
+          <option value="support">support</option>
+          <option value="editor">editor</option>
+        </select>
+        <br></br>
+        <br></br>
+        <Button variant="contained" color="success" onClick={handleConfirm}>
           Confirm
         </Button>
       </Box>
