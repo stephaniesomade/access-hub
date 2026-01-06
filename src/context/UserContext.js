@@ -29,8 +29,16 @@ export const UserProvider = ({ children }) => {
     setUsers(prev => prev.filter(user => user.id !== id));
   }
 
+  const toggleActive = (userId) => {
+    setUsers(prevUsers =>
+      prevUsers.map(user =>
+        user.id === userId ? { ...user, active: !user.active } : user
+      )
+    );
+  }
+
   return (
-    <UserContext.Provider value={{ users, setUsers, addUser, removeUser }}>
+    <UserContext.Provider value={{ users, setUsers, addUser, removeUser, toggleActive}}>
       {children}
     </UserContext.Provider>
   );

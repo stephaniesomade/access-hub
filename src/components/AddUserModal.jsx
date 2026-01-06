@@ -19,7 +19,7 @@ const style = {
 export default function AddUserModal({ open, onClose, onConfirm }) {
   const [userName, setUserName] = useState('');
   const [role, setRole] = useState('viewer');
-  const [active, setActive] = useState(true);
+  const [active] = useState(true);
   const handleCancel = () => {
     onClose();
   }
